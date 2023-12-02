@@ -35,6 +35,8 @@ const keyValue = array.reduce((acc, cur) => {
   let secondDigit = 0;
   let firstDigitAux;
   let secondDigitAux;
+
+  // first digit
   for (let i = 0; i < cur.length; i++) {
     if (Number.isInteger(+cur[i])) {
       firstDigit = cur[i];
@@ -56,6 +58,8 @@ const keyValue = array.reduce((acc, cur) => {
       break;
     }
   }
+
+  // second digit
   for (let i = cur.length - 1; i >= 0; i--) {
     if (Number.isInteger(+cur[i])) {
       secondDigit = cur[i];
