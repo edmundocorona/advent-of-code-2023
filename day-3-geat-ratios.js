@@ -1,5 +1,5 @@
 const content = document.querySelector('pre').textContent;
-const array = content.split('\n').slice(0, 10);
+const array = content.split('\n').slice(0, -1);
 
 // sum all products
 let accumulator = 0;
@@ -9,25 +9,30 @@ const sumProducts = function (product) {
 
 // multiply the numbers
 const multiplyNumbers = function (array) {
-  return array[0] * array[1] + array[2] * array[3];
+  let firstPair = array[0] * array[1];
+  firstPair = isNaN(firstPair) ? 0 : firstPair;
+  let secondPair = array[1] * array[2];
+  secondPair = isNaN(secondPair) ? 0 : secondPair;
+  return  firstPair + secondPair;
 };
 
 // complete the number
 const lookLeftDigits = function (i, j) {
-  const leftCell = array[i][j - 1];
-  // if (leftCell === undefined) {
-  //   return '';
-  // }
-  if (leftCell !== undefined & leftCell.match(/\d/)) {
-    return lookLeftDigits(i, j - 1) + leftCell;
+  if (j - 1 >= 0) {
+    const leftCell = array[i][j - 1];
+    if (leftCell.match(/\d/)) {
+      return lookLeftDigits(i, j - 1) + leftCell;
+    }
   }
   return '';
 };
 
 const lookRightDigits = function (i, j) {
-  const rightCell = array[i][j + 1];
-  if (rightCell !== undefined & rightCell.match(/\d/)) {
-    return rightCell + lookRightDigits(i, j + 1);
+  if (j + 1 < array[i].length) {
+    const rightCell = array[i][j + 1];
+    if (rightCell.match(/\d/)) {
+      return rightCell + lookRightDigits(i, j + 1);
+    }
   }
   return '';
 };
@@ -39,8 +44,7 @@ const getNumbersAround = function (i, j) {
     for (let l = -1; l <= 1; l++) {
       if (0 <= i + k & i + k < array.length 
         & 0 <= j + l & j + l < array[i].length) {
-        const cell = array[i + k][j + l];
-        if (cell !== undefined) {
+          const cell = array[i + k][j + l];
           if (cell.match(/\d/)) {
             const leftDigits = lookLeftDigits(i + k, j + l);
             const rightDigits = lookRightDigits(i + k, j + l);
@@ -50,7 +54,7 @@ const getNumbersAround = function (i, j) {
             // jumps
             l += rightDigits.length;
           }
-        }
+        
       }
     }
   }
