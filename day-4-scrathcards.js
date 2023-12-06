@@ -35,3 +35,39 @@ const sumPoints = array.reduce((accumulator, current) => {
 , 0);
 
 console.log(sumPoints);
+
+// let givenCards = 1;
+let index = 0;
+const copies = new Array(array.length).fill(1);
+// modify
+while (index < array.length) {
+  // givenCards--;
+  const numbers = parseNumbers(array[index]);
+  const matches = countMatches(numbers);
+
+  // if(matches === 0) {
+  //   copies[index] = 0;
+  // }
+  // console.log(index, matches);
+
+  for(let i = 1; i <= matches; i++) {
+    copies[index + i] += copies[index];
+    // console.log(index, matches, `copies[${index + i}] : ${copies[index + i]}`);
+  }
+
+  // console.log(index, givenCards);
+  // if (matches > givenCards) {
+  //   givenCards = matches;
+  // }
+  // console.log(index, givenCards, matches);
+  index++;
+  // console.log(index);
+}
+
+console.log(copies);
+
+const totalScratchcards = copies.reduce((acc, curr) => {
+  return acc + curr;
+}, 0);
+
+console.log(totalScratchcards);
