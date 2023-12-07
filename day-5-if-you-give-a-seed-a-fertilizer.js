@@ -49,5 +49,28 @@ const lowestLocation = seeds.reduce((min, curr) => {
   return location < min ? location : min;
 }, undefined);
 
-
 console.log(lowestLocation);  // 1181555926
+
+// part two
+const setSeeds = new Array (seeds.length / 2);
+for (let i = 0; i < setSeeds.length; i++) {
+  setSeeds[i] = [+seeds[2 * i], +seeds[2 * i + 1]];
+}
+
+console.table(setSeeds);
+
+let minLocation = calcLocation(setSeeds[0][0]);
+
+console.log(minLocation, calcLocation(364807853));
+
+for (let i = 0; i < setSeeds.length; i++) {
+  for (let j = 0; j < setSeeds[i][1]; j++) {
+    const location = calcLocation(setSeeds[i][0] + j);
+    if (location < minLocation) {
+      minLocation = location;
+    }
+  }
+  console.log(setSeeds[i][0]);
+}
+
+console.log('result', minLocation);
